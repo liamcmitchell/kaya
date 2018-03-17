@@ -1,0 +1,60 @@
+<html>
+<head>
+  <style type="text/css">
+    body {
+      color: black;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      margin: 0;
+    }
+    .box {
+      width: 80%;
+      height: 100px;
+      background-color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<script type="text/javascript">
+const total = 3
+const start = Date.now()
+
+const div = (val) => {
+  const diff = (Date.now() - start) / 50
+  const d = document.createElement('div')
+  d.className = 'box'
+  const hue = 360 / total * val + diff
+  d.style.backgroundColor = `hsl(${hue}, 60%, 50%)`
+  const rotateOffset =
+    val === 0
+      ? -(diff * 2)
+      : val === 1
+        ? diff
+        : val !== 2
+          ? -diff
+          : -Math.floor(diff / 30) * 30
+
+  const translateY = val === 2
+    ? `translateY(-${Math.abs(Math.cos(diff / 2)) * 300}px)`
+    : ''
+
+  d.style.transform = `${translateY} rotate(${360 / total + rotateOffset}deg)`
+  document.body.appendChild(d)
+}
+
+const render = () => {
+  document.body.innerHTML = ''
+  for (let count = 0; count < total; count++) {
+    div(count)
+  }
+  window.requestAnimationFrame(render)
+}
+
+render()
+</script>
+</body>
+</html>
